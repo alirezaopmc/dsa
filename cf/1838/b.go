@@ -85,3 +85,8 @@ func main() {
 		t--
 	}
 }
+
+/*
+If n is between 1 and 2. It prevents smaller (than n) permutations
+	from forming. So just swap n with the middle element between [1,2,n]
+*/

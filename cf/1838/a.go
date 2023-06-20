@@ -47,3 +47,11 @@ func main() {
 		t--
 	}
 }
+
+/*
+If the smallest value if negative so that is one of the answers
+	because no one can go smaller than it.
+Otherwise the largest value is the answer.
+
+! Note that the largest value is not good when we have a negative number.
+*/
