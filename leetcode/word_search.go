@@ -12,11 +12,11 @@ type PairSet map[Pair]bool
 func exist(board [][]byte, word string) bool {
 	vis := make(PairSet)
 	for i := 0; i < len(board); i++ {
-			for j := 0; j < len(board[1]); j++ {
-					if check(board, i, j, word, vis) {
-							return true
-					}
+		for j := 0; j < len(board[0]); j++ {
+			if check(board, i, j, word, vis) {
+				return true
 			}
+		}
 	}
 	return false
 }
@@ -32,73 +32,81 @@ func dfs(
 	vis PairSet,
 ) bool {
 	n, m := len(board), len(board[0])
-	
+
 	// If the word is searched completely
 	if len(word) == 0 {
-			return true
+		return true
 	}
-	
+
 	// If index is out of range
 	if i < 0 || i >= n || j < 0 || j >= m {
-			return false
+		return false
 	}
-	
+
 	// If the cell is already visited
 	if vis[Pair{i, j}] {
-			return false
+		return false
 	}
-	
+
 	// If the character is not the same
 	if board[i][j] != word[0] {
-			return false
+		return false
 	}
-	
+
 	// Mark current cell as visited
 	vis[Pair{i, j}] = true
-	
+
 	// Backtrack for neighbors
-	result := dfs(board, i+1, j, word[1:], vis) || 
-						dfs(board, i-1, j, word[1:], vis) || 
-						dfs(board, i, j+1, word[1:], vis) || 
-						dfs(board, i, j-1, word[1:], vis)
-	
+	if dfs(board, i+1, j, word[1:], vis) {
+		return true
+	}
+	if dfs(board, i-1, j, word[1:], vis) {
+		return true
+	}
+	if dfs(board, i, j+1, word[1:], vis) {
+		return true
+	}
+	if dfs(board, i, j-1, word[1:], vis) {
+		return true
+	}
+
 	// Backtrack by marking current cell as unvisited
 	vis[Pair{i, j}] = false
-	
-	return result
+
+	return false
 }
 
 func main() {
 	tests := []struct {
-		board [][]byte
-		word string
+		board    [][]byte
+		word     string
 		expected bool
 	}{
 		{
 			board: [][]byte{
-				{'A','B','C','E'},
-				{'S','F','C','S'},
-				{'A','D','E','E'},
+				{'A', 'B', 'C', 'E'},
+				{'S', 'F', 'C', 'S'},
+				{'A', 'D', 'E', 'E'},
 			},
-			word: "ABCCED",
+			word:     "ABCCED",
 			expected: true,
 		},
 		{
 			board: [][]byte{
-				{'A','B','C','E'},
-				{'S','F','C','S'},
-				{'A','D','E','E'},
+				{'A', 'B', 'C', 'E'},
+				{'S', 'F', 'C', 'S'},
+				{'A', 'D', 'E', 'E'},
 			},
-			word: "SEE",
+			word:     "SEE",
 			expected: true,
 		},
 		{
 			board: [][]byte{
-				{'A','B','C','E'},
-				{'S','F','C','S'},
-				{'A','D','E','E'},
+				{'A', 'B', 'C', 'E'},
+				{'S', 'F', 'C', 'S'},
+				{'A', 'D', 'E', 'E'},
 			},
-			word: "ABCB",
+			word:     "ABCB",
 			expected: false,
 		},
 	}
