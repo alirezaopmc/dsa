@@ -16,3 +16,4 @@ for _ in range(int(input())):
         print("YES" if is_prime(int('1'*k)) else "NO")
     else:
         print("YES" if is_prime(x) else "NO")
+
